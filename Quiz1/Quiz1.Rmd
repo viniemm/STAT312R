@@ -1,0 +1,70 @@
+---
+title: "Quiz 1"
+author: "Vinayak Mathur"
+date: "2/1/22"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+Disks of polycarbonate plastic from a supplier are analyzed for scratch and shock resistance. The results from 100 disks are summarized as follows:
+
+            Shock Resistance\
+                      High(A)     Low\
+Scratch     High(B)   70          9\
+Resistance  Low       16          5\
+
+Let A denote the event that a disk has high shock resistance, and let B denote the event that a disk has high scratch resistance. If a disk is selected at random, determine the following probabilities: (6 points)
+
+### a) 
+P(A)
+
+```{r}
+
+```
+Ans: P(A) = 0.86
+
+### b) 
+P(B)
+
+```{r}
+
+```
+Ans: P(B) = 0.79
+
+### c)
+P(Ac)
+
+```{r}
+
+```
+Ans: P(Ac)  = 0.14
+
+### d)
+P(A n B)
+
+```{r}
+
+```
+Ans: P(A n B)  = 0.7
+
+### e)
+P(A U B)
+
+```{r}
+
+```
+Ans: P(A U B)   = 0.95
+
+### f)
+P(Ac U B)
+
+```{r}
+
+```
+Ans: P(Ac U B)   = 0.84

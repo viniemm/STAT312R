@@ -1,0 +1,96 @@
+---
+title: "STAT 312R - HW2"
+author: Vinayak Mathur
+date: 23rd February 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+1. Information on a packet of seeds claims that 42% of seed in the package produce large tomatoes, while 38% produce yellow tomatoes.  Assume that size and color are independent. What’s the probability that a given seed will produce a large tomato or a yellow tomato?\
+ans) Let L be the event of getting a large tomato\
+Let Y be the event of a yellow tomato\
+P(L) = 0.42\
+P(Y) = 0.38\
+=> P(L U Y) = P(L) + P(Y) - P(L n Y)\
+=> P(L U Y) = 0.42 + 0.38 - 0.42*0.38\
+```{r}
+print(0.42 + 0.38 - 0.42 * 0.38)
+```
+
+2. In a NiCd battery, a fully charged cell is composed of nickelic hydroxide. Nickel is an element that has multiple oxidation states. Assume the following proportions of the states:\
+Nickel Charge      Proportions Found\
+0       0.17\
++2      0.35\
++3      0.33\
++4      0.15\
+a) Determine the cumulative distribution function of the nickel charge.\
+```{r}
+nickelCharge <- c(0, 2, 3, 4)
+proportionsFound <- c(0, 0.17, 0.35, 0.33, 0.15)
+
+## Plotling CDF
+plot(stepfun(nickelCharge, cumsum(proportionsFound)), vertical = F, pch = 20, cex = 2, lwd = 2, col = "blue", ylab = "F(x)",
+     main = "CDF for the nickel charge")
+grid()
+```
+
+b) Determine the mean and variance of the nickel charge.\
+```{r}
+mean(nickelCharge)
+sd(nickelCharge)^2
+```
+3. Heart failure is due to either natural occurrences (87%) or outside factors (13%). Outside factors are related to induced substances or foreign objects. Natural occurrences are caused by arterial blockage, disease, and infection. Suppose
+that 20 patients will visit an emergency room with heart failure. Assume that causes of heart failure for the individuals are independent.\
+a. What is the probability that three individuals have conditions caused by outside factors?\
+```{r}
+p <- 0.13
+ans1 <- dbinom(3, 20, p)
+print(ans1)
+```
+b. What is the probability that three or more individuals have conditions caused by outside factors?\
+```{r}
+print(1 - dbinom(2, 20, p))
+```
+c. What are the mean and standard deviation of the number of individuals with conditions caused by outside factors?\
+```{r}
+res <- 20 * p
+print(res)
+print(sqrt(20 * 0.13 * 0.87))
+```
+
+6. The demand for water use in Phoenix in
+2003 hit a high of about 442 million gallons per day on June 27
+(http://phoenix.gov/WATER/wtrfacts.html). Water use in the sum-
+mer is normally distributed with a mean of 310 million gallons per
+day and a standard deviation of 45 million gallons per day. City
+reservoirs have a combined storage capacity of nearly 350 million
+gallons.
+a. What is the probability that a day requires more water
+than is stored in city reservoirs?
+
+```{r}
+qnorm(0.75,5000, 1000)
+
+```
+b. What reservoir capacity is needed so that the probability
+that it is exceeded is 1%?
+```{r}
+qnorm(0.99, 310, 45)
+qnorm(0.99, 11, 0.3)
+
+```
+c. What amount of water use is exceeded with 95%
+probability?
+```{r}
+qnorm(0.99, 310, 45)
+
+```
+d. Water is provided to approximately 1.4 million people.
+What is the mean daily consumption per person at which
+the probability that the demand exceeds the current reser-
+voir capacity is 1%? Assume that the standard deviation of
+demand remains the same

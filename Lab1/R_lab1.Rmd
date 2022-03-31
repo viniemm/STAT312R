@@ -1,0 +1,50 @@
+---
+title: "STAT 312/312R - R lab 1"
+author: Vinayak Mathur
+date: 14th January 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Problem 1:
+Load the airpoll.txt data set into R using the read.table() function. Note that
+column names are included in the file so you have to use the header=T option. Use
+the head() function to print a few rows of the data. (4 points)
+
+```{r}
+airpoll <- read.table("airpoll.txt", header = TRUE)
+print(head(airpoll))
+```
+## Problem 2:
+Use R commands to answer the following questions about the dataset:
+
+### a)
+What class is the data object? (2 points)
+
+
+```{r}
+class(airpoll)
+```
+Ans: data.frame
+
+### b)
+How many observations are there in the dataset? (2 points)
+
+```{r}
+dim(airpoll)
+```
+Ans: 60 x 7
+
+### c)
+How many variables are there in the dataset? (2 points)
+```{r}
+names(airpoll)
+```
+Ans: 7
+

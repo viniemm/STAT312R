@@ -1,0 +1,64 @@
+---
+title: "Midterm"
+author: "Vinayak Mathur"
+date: "3/1/22"
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1
+Because not all airline passengers show up for their reserved seats, an airline sells 54 tickets for a flight that holds 50 passengers. The probability that a passenger does not show up is 0.05 and the passengers behave independently.\
+1. What is the probability that every passenger who shows up gets a seat? (8 points)\
+2. What is the probability that the flight departs with at least one empty seat? (8 points)\
+```{r}
+# 4 must not show up out of 54 with a probability of 0.05. We use the dbinom function to find the value.
+dbinom(4,54, 0.05)
+
+# at least 5 people must not show up.
+1-dbinom(4,54, 0.05)
+```
+## Problem 2
+An inexpensive blood test can be used to test whether or not a person has a certain type of disease. The test is not perfect: there is an 8% chance that a person who has the disease will falsely test negative and a 5% chance that a person who does not have the disease will falsely test positive. More accurate (and more expensive) testing has shown that the disease is present in 10% of the tested population.\
+1. Given that a person tests negative what is the probability he/she does not have this type of disease? (8 points)\
+2. Given that a person tests positive what is the probability he/she actually has this type of disease? (8 points)\
+\
+Let A be the event of getting a positive.\
+P(A) = 0.1\
+Let B be the event of getting a negative.\
+P(A) = 0.9\
+Let C be the event of getting a wrong result.\
+1.P(B^C') = P(B) * P(C')\
+0.92\
+\
+2.P(A^C') = P(A) * P(C')\
+0.95\
+
+## Problem 3
+At a large university students have either a final exam or a final paper at the end of a course. Let X be the random variable denoting the number of final exams that students at the university will take. The table below lists the probability mass function of X.\
+x	0	1	2	3	4\
+P(X=x)	0.1	?	0.3	0.2	0.2\
+1. The probability P(X=1) is missing. What is the value of P(X = 1)? (8 points)\
+2. Write down the cumulative distribution function of X and plot it. A rough sketch is fine. You can also use R to plot it (optional) (10 points)\
+3. Find the mean of this distribution. (8 points)\
+
+$$\sum_{x=0}^{n} P(X=x) = 1$$
+so $$P(X=1) = 1 - \sum_{x=0, x\neq 1}^{n} P(X=x)$$
+$$ans = 1 - (0.1 + 0.3 + 0.2 + 0.2)$$
+$$ans = 0.2$$
+```{r}
+exams <- c(0, 1, 2, 3, 4)
+proportions <- c(0, 0.1, 0.2, 0.3, 0.2, 0.2)
+
+plot(stepfun(exams, cumsum(proportions)), vertical = F, pch = 20, cex = 2, lwd = 2, col = "blue", ylab = "F(x)",
+     main = "CDF Exams and number of students")
+grid()
+
+
+proportions <- c(0.1, 0.2, 0.3, 0.2, 0.2)
+sum(proportions*exams)
+```

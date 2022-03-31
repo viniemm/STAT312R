@@ -1,0 +1,95 @@
+---
+title: "STAT 312R - HW1"
+author: Vinayak Mathur
+date: 27th January 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Problem 1:
+An article in a women's magazine reported that women who nurse their babies feel warmer and
+more receptive towards their infants than mothers who bottle-feed. This conclusion was based
+on the following scores from a questionnaire designed to measure warmth and receptivity,
+given to a random sample of 10 women from each group taken from recent hospital birth
+records (higher score represents more warmth and reception).\
+Nurse:  48.4, 51.5, 45.0, 47.0, 46.9, 47.7, 49.9, 48.5, 45.6, 48.9\
+Bottle feed: 42.5, 43.8, 44.5, 47.5, 44.5, 45.6, 43.4, 44.6, 47.1, 45.8\
+a) Is this an observational study or a controlled experiment?  Justify your answer. (2 pt)\
+b) Using SOCS, summarize the data for the two groups. (4 pts)\
+c) Using your descriptions in part b), compare the scores in the two groups. (2 pts)\
+d) If you or your partner were thinking about breast-feeding, what effect would this study have
+on your decision? Why? (2 pts)\
+```{r}
+nurse <- c(48.4, 51.5, 45.0, 47.0, 46.9, 47.7, 49.9, 48.5, 45.6, 48.9)
+bottle <- c(42.5, 43.8, 44.5, 47.5, 44.5, 45.6, 43.4, 44.6, 47.1, 45.8)
+summary(nurse)
+summary(bottle)
+boxplot(nurse)
+boxplot(bottle)
+hist(nurse,
+     main="Histogram for Nursed Infants",
+     xlab="Warmth and Reception",
+     border="green",
+     col="blue")
+hist(bottle,
+     main="Histogram for Bottle-fed Infants",
+     xlab="Warmth and Reception",
+     border="green",
+     col="pink")
+
+```
+ans) From the above calculations:\
+a) This is an observational study.\
+b) Nursed: Shape -> uni-modal distribution skewed to the left\
+Outliers -> No outliers\
+Center , Spread-> \
+Min. 1st Qu.  Median    Mean 3rd Qu.    Max.\
+45.00   46.92   48.05   47.94   48.80   51.50\
+\
+Nursed: Shape -> uni-modal distribution skewed to the right\
+Outliers -> No outliers\
+Center , Spread-> \
+Min. 1st Qu.  Median    Mean 3rd Qu.    Max.\
+42.50   43.98   44.55   44.93   45.75   47.50\
+
+## Problem 2:\
+One of the authors (DCM) has a Mercedes-Benz 500 SL Roadster.
+It is a 2003 model and has fairly low mileage (currently
+60,112 miles on the odometer). He is interested in learning how
+his car’s mileage compares with the mileage on similar SLs.
+The table below contains the mileage on 100 Mercedes-Benz
+SLs from the model years 2003–2009 taken from the Cars.com
+website.\
+### a)\
+Calculate the sample mean and standard deviation of the odometer readings.\
+### b)\
+Construct a histogram of the odometer readings and comment on the shape of the data distribution.\
+### c)\
+Construct a stem-and-leaf diagram of the odometer readings.\
+### d)\
+What is the percentile of DCM’s mileage?\
+```{r}
+miles <- read.table("MercMileage.txt")$V1
+dcm <- 60112
+mean(miles)
+sd(miles)
+hist(miles,
+     main="Histogram for Mercedes Mileage",
+     xlab="Miles",
+     border="green",
+     col="blue")
+stem(miles, scale = 2)
+plot(ecdf(miles))
+ecdf(miles)(dcm)
+
+```
+ans) From the above calculations:\
+a) mean = 34232.05 miles\
+standard deviation = 20414.52\
+d) 84%

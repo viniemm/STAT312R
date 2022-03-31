@@ -1,0 +1,44 @@
+---
+title: "R Lab 2"
+author: "Vinayak Mathur"
+date: "1/25/22"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1: 
+The energy consumption for 90 gas-heated homes during a winter heating season is given in the file "Energy_Usage.csv" (see Data module on canvas). The variable reported is BTU/number of heating degree day. 
+
+### a) 
+Use R codes to find the five point summary, mean and standard deviation of the data. (4 points)
+
+```{r}
+energy <- read.csv("Energy_Usage.csv", header = TRUE)
+summary(energy)
+sd(energy$BTU)
+```
+Ans: Standard Deviation = 2.86799
+
+### b) 
+Construct a histogram and a stem-and-leaf diagram of energy usage. Use appropriate scale for the stem-and-leaf diagram. Then use SOCS method to describe the data. (6 points)
+
+```{r}
+hist(energy$BTU,
+     main="Histogram for Energy usage of 90 homes",
+     xlab="Energy Usage in BTU",
+     border="green",
+     col="blue")
+stem(energy$BTU, scale = 2)
+summary(energy$BTU)
+```
+Ans: Shape -> Shape of the distribution is symmetric with a single peak.
+Outliers -> The data does not have any outliers.
+Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+2.970   7.947   9.835  10.038  12.045  18.260
+
+
