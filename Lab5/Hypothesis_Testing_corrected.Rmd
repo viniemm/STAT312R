@@ -1,0 +1,363 @@
+---
+title: "Hypothesis Testing"
+author: "Anirban Mondal"
+date: "11/27/2020"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example: Sulfer level (from lecture slides)
+A chemical plant is required to maintain ambient sulfur levels in the working environment atmosphere at an average level of no more than 12.5.
+The results of 15 randomly timed measurements of the sulfur level produced a sample mean of $\bar{x}$= 14.82. Assume that the population is approximately normal and standard deviation of these sulfur measurements is $\sigma$ = 3.35. 
+
+
+### a)
+
+What is the evidence that the chemical plant is in violation of the working code?
+
+Step 1: Parameter of interest
+
+$\mu$: The mean sulpher level in the environment
+
+Step 2: Set up hypothesis
+$H_0:\mu = 12.5 \ vs. H_1: \mu>12.5$ or $H_0:\mu \leq 12.5 \ vs. H_1: \mu>12.5$ 
+
+
+Step 3: Test Statistic and Critical Region: 
+
+Test Stistic: $Z_0=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$
+
+Critical Region: $z_{obs}>z_{\alpha}$
+
+Step 4: Computation 
+```{r}
+x_bar=14.82
+sig = 3.35
+n=15
+a=0.05
+z_obs=(x_bar - 12.5)/(sig/sqrt(n))
+z_a= qnorm(1-a)
+z_obs
+z_a
+```
+Ans: Since observed value of the test statistic is greater than $Z_{0.05}$ we reject $H_0$ at 5% level of significance and conclude that the chemical plant is in violation of the working code.
+
+
+
+### b)
+
+Find the p-value of the test and use it to test the hypothesis in a)
+
+P-value = $P(Z>z_{obs})$
+
+```{r}
+pval = 1-pnorm(z_obs)
+pval
+```
+Ans: As p-value is less than 0.05,  we reject $H_0$ at 5% level of significance and conclude that the chemical plant is in violation of the working code.
+
+
+### c)
+
+Find the power of the test when $\mu = 13$.
+
+\[
+\begin{aligned}
+Power = 1-\beta &= P(Z_0>z_{0.05}|\mu=13) \\
+& = P(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}>z_{0.05}|\mu=13) \\
+& =  P(\bar{X}>\mu_0 + z_{0.05}* \frac{\sigma}{\sqrt{n}}|\mu=13)\\
+&=  P(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}>z_{0.05}-(\mu-\mu_0)\sqrt{n}/\sigma)\\
+& =  P(Z>z_{0.05}-\delta \sqrt{n}/\sigma)
+\end{aligned}
+\]
+
+
+```{r}
+delta=13-12.5 ## mu - mu_0
+Power = 1-pnorm(qnorm(1-0.05) -delta*sqrt(n)/sig) ## z_\alpha
+Power
+```
+
+
+### d)
+
+What sample size do we need to detect a difference between the true and hypothesized mean of 2.0 with power at least 95%?
+
+$n \approx \frac{(z_{\alpha/2}+z_{\beta})^2\sigma^2}{\delta^2}$
+
+```{r}
+delta = 2
+b = 1-0.95
+a=0.05
+z_a= qnorm(1-a)
+z_b= qnorm(1-b)
+(z_a+z_b)^2*sig^2/(delta^2)
+
+```
+Ans: We need at least 31 samples.
+
+
+### d) Use the 95% one sided CI for $\mu$ to answer part a)
+
+```{r}
+#LCL=x_bar - z_a*sig/sqrt(n)
+LCL=x_bar - z_a*sig/sqrt(n)
+LCL
+```
+Ans: The 95% CI for $\mu$ (13.397, $\infty$) does not include the value under $H_0$, (12.5), hence we reject $H_0$ at 5% level of significance and conclude that the chemical plant is in violation of the working code.
+
+## Example: Hot dogs calorie content from lecture slides
+
+Data on calorie content in 20 different beef hot dogs from Consumer Reports (June 1986 issue): 186, 181, 176, 149, 184, 190, 158, 139, 175, 148, 152, 111, 141, 153, 190, 157, 131, 149, 135, 132.
+Assume that these numbers are observed values from a random sample of twenty independent $N(\mu, \sigma^2)$ random variables, where $\mu$ and $\sigma^2$  are unknown.
+Observed sample mean and standard deviations are $\bar{x}= 156.85$ and s = 22.64201.
+
+
+### a)
+Do these data give strong evidence that the average calorie content in beef hot dogs is less than 180?
+
+Step 1: Parameter of interest
+
+$\mu$: The mean calorie content of all such hotdogs.
+
+Step 2: Set up hypothesis
+$H_0:\mu = 180 \ vs. H_1: \mu<180$ or $H_0:\mu \geq 180 \ vs. H_1: \mu < 180$ 
+
+
+Step 3: Test Statistic and Critical Region: 
+
+Test Stistic: $T_0=\frac{\bar{X}-\mu_0}{s/\sqrt{n}}$
+
+Critical Region: $t_{obs}<-t_{\alpha, n-1}$
+
+```{r}
+data=c(186, 181, 176, 149, 184, 190, 158, 139, 175, 148, 152, 111, 141, 153, 190, 157, 131, 149, 135, 132)
+
+## using summary statistics and t interval formula
+n=length(data)
+x_bar=mean(data)
+s = sd(data)
+x_bar
+s
+t_obs=(x_bar-180)/(s/sqrt(n))
+t_a=qt(1-.05, n-1)
+t_obs
+-t_a
+pt(t_obs,n-1) # P(T<t_obs)
+# UCL=x_bar + t_a*s/sqrt(n)
+# UCL
+
+## using data directly
+t.test(data, mu=180, alternative="less", conf.level=0.95)
+```
+Ans: Since test statistic is less than the critical value we reject $H_0$ and conclude that there is strong evidence that the average calorie content in beef hot dogs is less than 180.
+
+### b) 
+
+If the true mean calorie content is 166 is the sample size n = 20 adequate that the null hypothesis in a) would be rejected with probability at least 0.9.
+
+Need to check if the power of the test at $\mu=166$ is greater than 0.9 with n=20 and $\alpha =0.05$
+
+Power = $P(T_0 < -t_{0.05,n-1}|\mu=166)$
+
+```{r}
+a=0.05
+delta=(166-180)/(s/sqrt(n)) ## (mu-mu_0)/(s/sqrt(n))
+Power = pt(-qt(1-a, n-1),ncp=delta, df=n-1) #P(T<-t_a, ncp=d)
+Power
+```
+
+<!-- #### c)  -->
+
+<!-- Do these data give strong evidence that the variance of the calorie content in beef hot dogs is greater than 400? -->
+
+
+
+<!-- ```{r} -->
+<!-- a=0.5 -->
+<!-- C=(n-1)*s^2/400^2 -->
+<!-- C -->
+<!-- qchisq(1-a, df=n-1) -->
+
+<!-- ``` -->
+<!-- We fail to reject $H_O$ as the observed value of the test statistic is less than the critical value. So we conclude that these no significant evidence in the data that the variance of the calorie content in beef hot dogs is greater than 400. -->
+
+## Example: Metal Rod from lectute slides
+
+A machine produces metal rods used in an automobile suspension system. A random sample of 12 rods is selected and the diameter is measured. The resulting data is given below. 8.23, 8.29, 8.19, 8.14, 8.31, 8.19, 8.29, 8.32, 8.42, 8.24, 8.30, 8.40
+
+
+### a)
+Check the assumption of normality for rod diameter.
+
+
+```{r}
+data = c(8.23, 8.29, 8.19, 8.14, 8.31, 8.19, 8.29, 8.32, 8.42, 8.24, 8.30, 8.40)
+
+### a) Normality check
+qqnorm(data)
+qqline(data)
+
+library(qualityTools)
+qqPlot(data)
+```
+The data appears to come from a Normal distribution as the q-q plot follows a straight line
+
+### b) 
+Is there a strong evidence that the mean rod diameter is not 8.20 using a fixed level 0.05 test.
+
+$H_0$: $\mu=8.2$ vs. $H_1$: $\mu \neq 8.2$
+
+```{r}
+t.test(data, mu=8.2, alternative="two.sided", conf.level=0.95)
+```
+Since the p-value is very close to 0 (<0.05) we reject $H_0$ and conclude the mean rod diameter is signifantly different from 8.20. 
+
+### c)
+
+Find the P-value for this test
+
+### d)
+Find the 95% confidence interval on mean rod diameter.
+
+Ans: the 95% CI for the mean rod diameter is given by (8.223554 8.329779)
+
+
+
+## Example: Defective calculator
+
+A manufacturer of electronic calculators is interested in estimating the fraction of defective units produced. A random sample of 800 calculators contains 10 defectives.
+
+
+### a) 
+
+Formulate and test appropriate hypothesis to determine if the fraction of defectives exceeds 0.01 at 5% level of significance.
+
+$H_0$: p=0.01 vs. $H_1$: p > 0.01
+
+```{r}
+a=0.05
+n=800
+x=10
+p_hat = x/n
+p_hat
+z_obs = (p_hat - 0.01)/sqrt(0.01*0.99/n)
+z_a=qnorm(1-a)
+z_obs
+z_a
+1-pnorm(z_obs)
+```
+
+Ans: Since the observed value of the test statistic 0.71 is less than the critical value 1.645 we fail to reject $H_0$ at level 0.05 and conclude that there is no signifant evidence in the data that fraction of defectives exceeds 0.01.
+
+or
+
+Since the p-value, 0.2386 is greater than 0.05 we fail to reject $H_0$ and conclude that there is no signifant evidence in the data that fraction of defectives exceeds 0.01.
+
+### b)
+
+Suppose that the true p =0.02 and $\alpha$ = 0.05. What is the power for this test?
+
+```{r}
+p0=0.01
+p1=0.02
+
+## prob of fail to reject H0 when p=0.02 P(phat<z_a+sd(phat)|p=0.02)
+beta = pnorm(p0+z_a*sqrt(p0*(1-p0)/n),p1, sqrt(p1*(1-p1)/n))
+pow=1-beta
+pow
+
+## using the formula from book
+1-pnorm((p0-p1+z_a*sqrt(p0*(1-p0)/n))/sqrt(p1*(1-p1)/n))
+
+```
+
+
+### c)
+Suppose that the true p =0.02 and $\alpha$ = 0.05. How large a sample would be required if we want the power to be at least 0.9.
+
+```{r}
+
+z_b=qnorm(0.9)
+nb=(z_a*sqrt(p0*(1-p0)) + z_b*sqrt(p1*(1-p1)))^2/(p1-p0)^2
+nb
+
+n=1178
+1-pnorm((p0-p1+z_a*sqrt(p0*(1-p0)/n))/sqrt(p1*(1-p1)/n))
+
+```
+Ans: The required sample size is 1178
+
+
+
+## Goodness of fit tests
+
+<!-- ### Printed circuit board example -->
+
+<!-- The number of defects in printed circuit boards is hypothesized to follow a Poisson distribution. A random sample of n = 60 printed boards has been collected, and the following number of defects observed. Hypothesis to test: -->
+<!-- $H_0$: Population is Poisson vs. $H_1$: Population is not Poisson -->
+
+<!-- ```{r} -->
+
+<!-- x=c(0,1,2,3) ## sample values -->
+<!-- Obs=c(32,15,9,4) ## Observed frequencies -->
+<!-- n=sum(Obs) ## number of samples -->
+<!-- lambda=sum(x*Obs)/n ## estimate of lambda (sample mean) -->
+<!-- prob=dpois(x,lambda) ## probabilities using pmf -->
+<!-- prob[4]=1-ppois(2,lambda) ## Need P(X>=3) =1-P(X<=2) -->
+<!-- E= n*prob ## Expected frequencies -->
+<!-- cbind(x,Obs,prob, E) -->
+
+<!-- ## Combine the last two rows for the table -->
+<!-- probc=prob[1:3]  -->
+<!-- probc[3]=prob[3]+prob[4] -->
+<!-- Ec=n*probc -->
+<!-- Obsc=Obs[1:3] -->
+<!-- Obsc[3]=Obs[3]+Obs[4] -->
+
+<!-- cbind(x[1:3],Obsc,probc, Ec) -->
+
+<!-- ## Test statistic -->
+<!-- ChiSt= sum((Obsc-Ec)^2/Ec) -->
+
+<!-- ## degrees of freedom -->
+<!-- k=length(probc) -->
+<!-- df=k-1-1 -->
+
+<!-- ## Critical region -->
+<!-- Chi_a=qchisq(0.95,df) -->
+
+<!-- ## p-value -->
+<!-- pval=1-pchisq(ChiSt,df) -->
+
+
+<!-- cbind(ChiSt, df, Chi_a, pval) -->
+
+<!-- ``` -->
+<!-- Ans: As the observed value of the test statistic 2.96 is less than the critical value 3.84 we fail to reject H0 and conclude that there is no reason to believe that the population is not Poisson.  -->
+
+### SAT Exam score example
+
+To study the SAT scores (verbal) of students admitted to all the universities in a state, 200 students are randomly sampled from the universities in that state and their scores are observed.
+
+Question: Can you infer from this sample that the SAT scores of al students in that state can be described by a normal probability model?
+
+Hypothesis: $H_0$: The population is normal vs $H_1$ The population is not normal
+
+```{r}
+## loadinf the data
+data=read.csv("SAT_score.csv")
+sat=data$Score
+
+### Shapiro-Wilk normality test
+
+## The test is based on the order statistics (quantiles)
+shapiro.test(sat)
+```
+Ans: As the p value is greater than 0.05, we fail to reject the null hypothesis that the distribution of SAT scores is Normal. 

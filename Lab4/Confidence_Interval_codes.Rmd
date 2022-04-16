@@ -1,0 +1,231 @@
+---
+title: "Confidence Interval Updated"
+author: 'Prof.: Anirban Mondal'
+date: "01/25/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Example: Sulfer level (from lecture slides)
+
+### a)
+
+95% two sided CI is given by $(\bar{X} - z_{0.025}\sigma/\sqrt(n), \bar{X} + z_{0.025}\sigma/\sqrt(n)$
+
+```{r}
+x_bar=14.82
+sig = 3.35
+n=15
+z_0.025= qnorm(1-0.025)
+LCL=x_bar - z_0.025*sig/sqrt(n)
+UCL=x_bar + z_0.025*sig/sqrt(n)
+c(LCL, UCL)
+```
+Ans: The observed value of the 95% two sided CI is (13.1247, 16.5153)
+
+### b)
+
+95% one sided upper CI is given by $(\bar{X} - z_{0.05}\sigma/\sqrt(n), \infty$
+
+```{r}
+z_0.05= qnorm(1-0.05)
+LCL=x_bar - z_0.05*sig/sqrt(n)
+LCL
+```
+Ans: The observed value of the 95% one sided upper CI is (13.39726, $\infty$)
+
+
+## Simulation Study
+
+
+Interpretation of confidence interval
+
+### part a)
+Generate  n=20 samples from N(8,4). Compute two sided 95% CI for $mu$ using this sample.
+
+
+```{r}
+n=20
+mu=8
+sig=2
+set.seed(20)
+sam = rnorm(n,mu,sig)
+x_bar=mean(sam)
+z_0.025= qnorm(1-0.025)
+LCL=x_bar - z_0.025*sig/sqrt(n)
+UCL=x_bar + z_0.025*sig/sqrt(n)
+LCL
+UCL
+```
+### part b)
+Repeat part a 100 times and check how many of the intervals contains the true mean 8.
+
+```{r}
+#set.seed(10)
+LCL=rep(0,1000)
+UCL=rep(0,1000)
+for (i in 1:1000){
+sam = rnorm(n,mu,sig)
+x_bar=mean(sam)
+z_0.025= qnorm(1-0.025)
+LCL[i]=x_bar - z_0.025*sig/sqrt(n)
+UCL[i]=x_bar + z_0.025*sig/sqrt(n)
+}
+sum((UCL>mu)&(LCL<mu)) 
+```
+
+
+```{r}
+n=z_0.025^2*sig^2/1.5^2
+
+n
+```
+
+## Example: Hot dogs calorie content from lecture slides
+
+### a)
+Two sided 95% CI for mean calorie content
+```{r}
+data=c(186, 181, 176, 149, 184, 190, 158, 139, 175, 148, 152, 111, 141, 153, 190, 157, 131, 149, 135, 132)
+
+## using summary statistics and t interval formula
+n=length(data)
+x_bar=mean(data)
+s = sd(data)
+x_bar
+s
+t_a=qt(1-.05/2, n-1)
+LCL=x_bar - t_a*s/sqrt(n)
+UCL=x_bar + t_a*s/sqrt(n)
+c(LCL, UCL)
+## using data directly
+t.test(data, mu=0, alternative="two.sided", conf.level=0.95)
+```
+
+### b) 
+
+One side 95% upper CI
+
+```{r}
+t_a=qt(1-.05, n-1)
+LCL=x_bar - t_a*s/sqrt(n)
+LCL
+
+##or
+t.test(data, mu=100, alternative="greater", conf.level=0.95)
+```
+The one side 95% upper CI is (148.0956, $\infty$)
+
+
+#### c) 95% two sided CI for $\sigma^2$
+
+```{r}
+chi_a=qchisq(1-0.025,n-1)
+chi_a
+chi_1_a=qchisq(0.025,n-1)
+chi_1_a
+LCL=(n-1)*s^2/chi_a
+UCL=(n-1)*s^2/chi_1_a
+LCL
+UCL
+```
+
+## Example: Metal Rod from lectute slides
+
+### a)
+```{r}
+data = c(8.23, 8.29, 8.19, 8.14, 8.31, 8.19, 8.29, 8.32, 8.42, 8.24, 8.30, 8.40)
+
+### a) Normality check
+qqnorm(data)
+qqline(data)
+
+library(qualityTools)
+qqPlot(data)
+```
+The data appears to come from a Normal distribution as the q-q plot follows a straight line
+
+### b) 
+95% confidence interval 
+```{r}
+t.test(data, mu=0, alternative="two.sided", conf.level=0.95)
+```
+
+## Example: Prevalence of disease
+
+We are interested in the proportion, p, of people that have a disease. Have a random sample of n = 100 people and test them all for a disease. We observe 10 of them have the disease.
+
+### a) Find a 95% one sided upper CI for p (more relavant for a widespread common disease)
+
+```{r}
+n=100
+x=10
+p_hat = x/n
+LCL = p_hat - qnorm(0.95)*sqrt(p_hat*(1-p_hat)/n)
+LCL
+```
+
+Ans: 95% upper CI for p is given by: (0.05065,1)
+
+### b) Find a 95% one sided lower CI for p (more relavant for a rare disease)
+
+```{r}
+UCL = p_hat + qnorm(0.95)*sqrt(p_hat*(1-p_hat)/n)
+UCL
+```
+Ans: 95% lower CI for p is given by: (0,0.1493)
+
+
+### c) Find a 95% two sided CI for p 
+
+```{r}
+LCL = p_hat - qnorm(0.975)*sqrt(p_hat*(1-p_hat)/n)
+UCL = p_hat + qnorm(0.975)*sqrt(p_hat*(1-p_hat)/n)
+LCL
+UCL
+```
+Ans: 95% two CI for p is given by: (0.0412, 0.1588)
+
+### d) How large a sample size is required if we want to be 95% confident that the error in using estimate $\hat{p}$ to estimate p is less than 0.01, regardless the value of the true p.
+
+```{r}
+E=0.01
+qnorm(0.975)^2*0.25/(E^2)
+```
+Ans: sample size should be atleast 9604.
+
+## Example: Life time of a biomedical device
+
+The life in hours of a biomedical device under development in the
+laboratory is known to be approximately normally distributed. A
+random sample of 15 devices is selected and found to have an
+average of 5625.1 hours and a sample standard deviation of 226.1
+hours.
+
+### a) Find a 95% confidence interval for the mean life time of all  such devices
+
+```{r}
+n=15
+x_bar=5625.1
+s=226.1
+t_a=qt(1-.05/2, n-1)
+LCL=x_bar - t_a*s/sqrt(n)
+UCL=x_bar + t_a*s/sqrt(n)
+c(LCL, UCL)
+```
+A 95% confidence interval for the mean life time of all such devices is (5499.89.237, 5750.31)
+
+
+### b) Say we buy one device (not one in the sample). We are intesrested in estimating how long can we expect the device to last? Answer this by finding a 95% prediction interval for this new device.
+
+
+```{r}
+LCL=x_bar - t_a*s*(1+1/sqrt(n))
+UCL=x_bar + t_a*s*(1+1/sqrt(n))
+c(LCL, UCL)
+```
+Ans: A 95% prediction interval for this new device is (5014.954 6235.246). With 95%
+confidence we expect this new device will last in between 5014.954 and 6235.246 hrs.

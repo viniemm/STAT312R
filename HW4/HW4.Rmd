@@ -1,0 +1,46 @@
+---
+title: "STAT 312R - HW4"
+author: Vinayak Mathur
+date: 1st April 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data <- c(79.3, 75.1,78.2, 74.1, 73.9, 75.0, 77.6,
+          77.3, 73.8, 74.6, 75.5, 74.0, 74.7, 75.9,
+          72.9, 73.8, 74.2, 78.1, 75.4, 76.3, 75.3,
+          76.2, 74.9, 78.0, 75.1, 76.8)
+summary(data)
+var(data)
+sd(data)
+```
+
+
+```{r}
+Xbar <- vector()
+for (i in 1:100){
+  randX <- rexp(50, 2)
+  Xbar <- append(Xbar, mean(randX))
+}
+
+# Theoretical mean is 0.5
+mean(Xbar)
+# Theoretical variance is 0.25
+var(Xbar) * 50
+
+
+
+standardizedXbar <- vector()
+for (i in 1:100){
+  stX <- (Xbar[i] - 0.5)/10
+  standardizedXbar <- append(standardizedXbar, stX)
+}
+hist(standardizedXbar, breaks = 15 )
+
+```

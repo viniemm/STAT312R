@@ -1,0 +1,82 @@
+---
+title: "R Lab 5"
+author: "Vinayak Mathur"
+date: "14th April 2022"
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1:
+
+A random sample of 21 energy bars of a particular brand is selected from a number of different stores. The labels on the bars claim that on the average such energy bars contain 20 grams of protein. Laboratory tests shows that the actual grams of protein for this 21 samples are:
+20.70,    27.46,    22.15,    19.85,    21.29,    24.75, 20.75,    22.91, 25.34,    20.33, 21.54,
+21.08, 22.14, 19.56,    21.10, 18.04,    24.12,    19.95,  19.72,    18.28,    16.26.
+
+### a) (2 points)
+Construct a quantile-quantile plot for the data to check if the protein contents on such energy bars can be modelled by a normal distribution.
+
+```{r}
+library(qualityTools)
+sampleData <- c(20.70, 27.46, 22.15, 19.85, 21.29, 24.75, 20.75, 22.91, 25.34, 20.33, 21.54,
+                21.08, 22.14, 19.56, 21.10, 18.04, 24.12, 19.95, 19.72, 18.28, 16.26)
+qqPlot(sampleData, "Normal")
+```
+Ans: Initial analysis of the data from the quantile-quantile plot concludes that the data follows a normal distribution.
+
+### b) (4 points)
+Check the normality assumption about the population distribution using a formal hypothesis testing method. Use a significance level of $\alpha = 0.05$. You can use the Shapiro-Wilk test for normality. Clearly state the null hypothesis and the alternative hypothesis. Do you have the same conclusion as in a)?\
+```{r}
+t.test(sampleData)
+shapiro.test(sampleData)
+```
+Ans: Null hypothesis $(p > \alpha)$: The values are sampled form a population that follows a normal distribution.
+
+Alternative hypothesis $(p \leq \alpha)$: The values are not sampled from a population that follows a normal distribution.
+
+We see that the p-value from the Shapiro-Wilks is $0.7079$ which follows the null hypothesis and the alternative hypothesis is rejected. This is the same conclusion as in  a).
+
+
+### c) (6 points)
+Test a hypothesis against the claim that the average protein content on such energy bars is equal to 20 grams. Use a significance level of $\alpha = 0.05$. Clearly state the null hypothesis and the alternative hypothesis and your conclusion in the context. Also report the p-value.
+
+
+Null Hypothesis: The average protein content in each energy bars is equal to 20 grams. $H_0: \mu = 20$
+
+Alternate Hypothesis: The average protein content in each energy bars is not equal to 20 grams. $H_1: \mu < 20$ or $H_1: \mu > 20$
+
+Step 1: Parameter of interest
+
+$\mu$: The mean grams of protein in each energy bar
+
+Step 2: Set up hypothesis
+
+Null Hypothesis: The average protein content in each energy bars is equal to 20 grams. $H_0: \mu = 20$
+
+Alternate Hypothesis: The average protein content in each energy bars is not equal to 20 grams. $H_1: \mu \deq 20$
+
+
+Step 3: Test Statistic and Critical Region:
+
+Test Statistic: $Z_0=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}$
+
+Critical Region: $z_{obs} < z_{\alpha}$ and $z_{obs} > -z_{\alpha}$
+
+Step 4: Computation
+
+```{r}
+x_bar <- mean(sampleData)
+sig <- var(sampleData)
+n <- 21
+a <- 0.05
+z_obs <- (x_bar - 20) / (sig / sqrt(n))
+z_a <- qnorm(1 - a)
+z_obs
+p_val <- 2*(1-pnorm(z_obs))
+p_val
+-1 * z_a < z_obs && z_a > z_obs
+```

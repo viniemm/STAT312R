@@ -6,6 +6,14 @@
   <component name="RMarkdownSettings">
     <option name="renderProfiles">
       <map>
+        <entry key="file://$PROJECT_DIR$/AI/Hypothesis_Testing_corrected.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/AI/Hypothesis_Testing_corrected.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/AI" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/Assignment1/R_lab1.Rmd">
           <value>
             <RMarkdownRenderProfile>
@@ -45,6 +53,27 @@
             </RMarkdownRenderProfile>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/HW3/HW4.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW3" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/HW4/HW2.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/HW4/HW4.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/Lab1/R_lab1.Rmd">
           <value>
             <RMarkdownRenderProfile>
@@ -58,6 +87,37 @@
             <RMarkdownRenderProfile>
               <option name="lastOutput" value="$PROJECT_DIR$/Lab2/Rlab2.pdf" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Lab2" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/Lab4/Confidence_Interval_codes.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Lab4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/Lab4/R_lab4.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/Lab4/R_lab4.pdf" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Lab4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/Lab5/Hypothesis_Testing_corrected.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/Lab5/Hypothesis_Testing_corrected.pdf" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Lab5" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/Lab5/R_lab5.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/Lab5/R_lab5.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/Lab5" />
             </RMarkdownRenderProfile>
           </value>
         </entry>

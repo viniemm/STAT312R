@@ -1,0 +1,49 @@
+---
+title: "R Lab 4"
+author: "Vinayak Mathur"
+date: "5th April 2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1:
+
+A random sample of 16 Americans in a city yielded the following data on the number of pounds of beef consumed per year: 118 ,115.125,110, 112, 130,117 ,112 ,115 ,120, 113, 118, 119, 122, 123, 126.
+
+
+### a) (4 points)
+Construct a quantile-quantile plot for the data to check if the annual beef consumption in the given city can be modelled by a normal distribution.
+
+```{r}
+sampleData <- c(118, 115, 125, 110, 112, 130, 117, 112, 115, 120, 113, 118, 119, 122, 123, 126)
+qqnorm(sampleData, pch = 1, frame = FALSE)
+qqline(sampleData, col = "steelblue", lwd = 2)
+shapiro.test(sampleData)
+```
+Ans:
+
+### b) (4+2=6 points)
+Construct a two-sided 95% confidence interval for the mean beef consumption of the people in the given city and interpret it.\
+
+95% two-sided CI where neither $\mu$ nor $\sigma$ are known is given by $(\bar{X} - t_{\alpha/2, n-1}\displaystyle\frac{s}{\sqrt(n)}, \bar{X} + t_{\alpha/2, n-1}\frac{s}{\sqrt(n)})$\
+```{r}
+
+t.test(sampleData)
+x_bar <- mean(sampleData)
+s <- sd(sampleData)
+n <- length(sampleData)
+alpha <- 0.95
+t <- qt((1-alpha)/2, n-1)
+LCL <- x_bar - abs(t*s/sqrt(n))
+UCL <- x_bar + abs(t*s/sqrt(n))
+c(LCL, UCL)
+
+
+
+```
+
