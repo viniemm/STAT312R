@@ -6,6 +6,22 @@
   <component name="RMarkdownSettings">
     <option name="renderProfiles">
       <map>
+        <entry key="file://$PROJECT_DIR$/AI/AI Written HW 55_57.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/AI/AI-Written-HW-55_57.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/AI" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/AI/AI Written HW 57.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/AI/AI-Written-HW-57.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/AI" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/AI/Hypothesis_Testing_corrected.Rmd">
           <value>
             <RMarkdownRenderProfile>
@@ -53,6 +69,14 @@
             </RMarkdownRenderProfile>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/HW3/HW3.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/HW3/HW3.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW3" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/HW3/HW4.Rmd">
           <value>
             <RMarkdownRenderProfile>
@@ -70,7 +94,16 @@
         <entry key="file://$PROJECT_DIR$/HW4/HW4.Rmd">
           <value>
             <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/HW4/HW4.html" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW4" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/HW5/HW5.Rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="lastOutput" value="$PROJECT_DIR$/HW5/HW5.html" />
+              <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$/HW5" />
             </RMarkdownRenderProfile>
           </value>
         </entry>

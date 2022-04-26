@@ -1,0 +1,174 @@
+---
+title: "STAT 312R - HW5"
+author: Vinayak Mathur
+date: 20st April 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Question 2 8.S10
+
+During the 1999 and 2000 baseball seasons, there was
+much speculation that the unusually large number of home runs
+hit was due at least in part to a livelier ball. One way to test
+the “liveliness” of a baseball is to launch the ball at a vertical
+surface with a known velocity VL and measure the ratio of the
+outgoing velocity VO of the ball to VL. The ratio $R = VO/VL$ is
+called the coefficient of restitution. Following are measurements
+of the coefficient of restitution for 40 randomly selected base-
+balls. The balls were thrown from a pitching machine at an oak
+surface. \
+\
+
+(0.6248, 0.6237, 0.6118, 0.6159, 0.6298, 0.6192, 0.6520, 0.6368, 0.6220, 0.6151, 0.6121, 0.6548, 0.6226, 0.6280, 0.6096, 0.6300, 0.6107, 0.6392, 0.6230, 0.6131, 0.6223, 0.6297, 0.6435, 0.5978, 0.6351, 0.6275, 0.6261, 0.6262, 0.6262, 0.6314, 0.6128, 0.6403, 0.6521, 0.6049, 0.6170, 0.6134, 0.6310, 0.6065, 0.6214, 0.6141)
+\
+\
+a. Is there evidence to support the assumption that the\
+coefficient of restitution is normally distributed?\
+
+```{r}
+coeffs <- c(0.6248, 0.6237, 0.6118, 0.6159, 0.6298, 0.6192, 0.6520, 0.6368, 0.6220, 0.6151, 0.6121, 0.6548, 0.6226, 0.6280, 0.6096, 0.6300, 0.6107, 0.6392, 0.6230, 0.6131, 0.6223, 0.6297, 0.6435, 0.5978, 0.6351, 0.6275, 0.6261, 0.6262, 0.6262, 0.6314, 0.6128, 0.6403, 0.6521, 0.6049, 0.6170, 0.6134, 0.6310, 0.6065, 0.6214, 0.6141)
+
+library(qualityTools)
+qqPlot(coeffs, "Normal")
+```
+
+
+b. Find a 99% CI on the mean coefficient of restitution.\
+```{r}
+
+n <- length(coeffs)
+xbar <- mean(coeffs)
+s <- sd(coeffs)
+t <- qt(p = .005, df = n - 1)
+margin <- t * s / sqrt(n)
+lower <- xbar + margin
+upper <- xbar - margin
+
+print(lower)
+print(upper)
+
+```
+Ans) $0.6187462 \leq \mu \leq 0.6299288$\
+
+
+
+c. Find a 99% prediction interval on the coefficient of\
+restitution for the next baseball that will be tested.\
+```{r}
+margin <- t * s * sqrt(n + 1) / sqrt(n)
+lower <- xbar + margin
+upper <- xbar - margin
+
+print(lower)
+print(upper)
+
+```
+Ans) $0.0.5885355 \leq \mu \leq 0.6601395$\
+
+
+### Question 4 9.2.8
+
+Supercavitation is a propulsion technology for undersea vehicles that can greatly increase their speed. It occurs above
+approximately 50 meters per second when pressure drops sufficiently to allow the water to dissociate into water vapor, forming
+a gas bubble behind the vehicle. When the gas bubble completely encloses the vehicle, supercavitation is said to occur.
+Eight tests were conducted on a scale model of an undersea
+vehicle in a towing basin with the average observed speed
+$x = 102.2$ meters per second. Assume that speed is normally
+distributed with known standard deviation $\sigma = 4$ meters per
+second.\
+
+
+a. Test the hypothesis $H0: \mu = 100$ versus $H1: \mu < 100$ using
+$α = 0.05$.
+```{r}
+mu <- 100
+xbar <- 102.2
+sig <- 4
+n <- 8
+
+z0 <- (xbar - mu) / (sig / sqrt(n))
+
+za <- 1.65
+# we reject H0 if z0<-za
+res <- z0 < (-za)
+print(res)
+
+
+
+```
+Ans) We do not reject $H_0$ and reject $H_1$\
+
+
+
+
+
+b. What is the P-value for the test in part (a)?
+```{r}
+2 * pnorm(-abs(z0))
+```
+
+c. Compute the power of the test if the true mean speed is
+as low as 95 meters per second.
+
+
+```{r}
+mu2 <- 95
+z0 <- (mu2 - mu) / (sig / sqrt(n))
+print(z0)
+
+print(1 - pnorm(-za - z0))
+
+```
+ans) 0.0296789\
+
+
+### Question 5 9.3.11
+
+
+Given ASU female student height data in inches: (62, 64, 61, 67, 65, 68, 61, 65, 60, 65, 64, 63, 59, 68, 64, 66, 68, 69, 65, 67, 62, 66, 68, 67, 66, 65, 69, 65, 69, 65, 67, 67, 65, 63, 64, 67, 65)\
+
+$H_0: \mu \geq 65$\
+$H_1: \mu < 65$\
+
+a. Can you support a claim that the mean height of female
+engineering students at ASU is at least 65 inches? Use
+$\alpha = 0.05$. Find the P-value.
+
+```{r}
+heightData <- c(62, 64, 61, 67, 65, 68, 61, 65, 60, 65, 64, 63, 59, 68, 64, 66, 68, 69, 65, 67, 62, 66, 68, 67, 66, 65, 69, 65, 69, 65, 67, 67, 65, 63, 64, 67, 65)
+
+
+mu <- 65
+
+t.test(heightData, mu = mu)
+qt(0.05/2, 36, lower.tail = FALSE)
+```
+ans) Since 0.3877 < 2.028, reject the alternate hypothesis and conclude that there is sufficient evidence to indicate that the true mean height of female engineering students is equal to 65 at α = 0.05\
+
+
+
+
+b. Check the normality assumption.
+```{r}
+qqPlot(heightData, "Normal")
+shapiro.test(heightData)
+```
+ans) Since p-value = 0.1053 > 0.05, $H_0$ is accepted and the distribution is concluded to be normally distributed.\
+
+
+
+
+c. Compute the power of the test if the true mean height is
+68 inches.
+```{r}
+t.test(heightData, mu = 68)
+1-6.299e-08
+```
+ans) p-value = 1\
+
+

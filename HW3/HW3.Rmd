@@ -1,5 +1,5 @@
 ---
-title: "STAT 312R - HW4"
+title: "STAT 312R - HW3"
 author: Vinayak Mathur
 date: 1st April 2022
 output:
@@ -12,11 +12,16 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-data <- c(79.3, 75.1,78.2, 74.1, 73.9, 75.0, 77.6,
-          77.3, 73.8, 74.6, 75.5, 74.0, 74.7, 75.9,
-          72.9, 73.8, 74.2, 78.1, 75.4, 76.3, 75.3,
-          76.2, 74.9, 78.0, 75.1, 76.8)
-summary(data)
-var(data)
-sd(data)
+library(qualityTools)
+
+femaleData <- c(62, 64, 61, 67, 65, 68, 61, 65, 60, 65, 64, 63, 59, 68, 64, 66, 68, 69, 65, 67, 62, 66, 68, 67, 66, 65,
+                69, 65, 69, 65, 67, 67, 65, 63, 64, 67, 65)
+maleData <- c(69, 67, 69, 70, 65, 68, 69, 70, 71, 69, 66, 67, 69, 75, 68, 67, 68, 69, 70, 71, 72, 68, 69, 69, 70, 71,
+              68, 72, 69, 69, 68, 69, 73, 70, 73, 68, 69, 71, 67, 68, 65, 68, 68, 69, 70, 74, 71, 69, 70, 69)
+
+qqPlot(femaleData)
+qqPlot(maleData)
+
 ```
+
+Conclusion: Both data sets follow a normal distribution

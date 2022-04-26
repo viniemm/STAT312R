@@ -1,0 +1,107 @@
+---
+title: "AI Written Q57"
+author: "Vinayak Mathur, Devin Lin, Ramon Wang"
+date: "4/15/2022"
+output:
+pdf_document: default
+html_document:
+df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Question 57:
+Finally,  plot  P(DN+1=lime|hMAP)  and  P(DN+1=lime|hML)  as  N  varies  from  1  to  200.  Pick hMAP / hML just from h3 and h4 and assume the prior probability of h3 to be 0.9.
+
+Prior distribution over $h_1,...,h_5$ is given by $⟨0.025,0.025,0.9,0.025,0.025⟩$
+
+```{r}
+
+main_func <- function(givenData) {
+
+  theta <- c(0.1/4, 0.1/4, 0.9, 0.1/4, 0.1/4)
+
+  n <- length(givenData)
+
+  candyData <- givenData
+
+  phd1 <- c(0.1/4)
+  phd2 <- c(0.1/4)
+  phd3 <- c(0.9)
+  phd4 <- c(0.1/4)
+  phd5 <- c(0.1/4)
+
+
+  for (d in candyData) {
+    if (d == 1) {
+      phd1 <- append(phd1, theta[1])
+      phd2 <- append(phd2, theta[2])
+      phd3 <- append(phd3, theta[3])
+      phd4 <- append(phd4, theta[4])
+      phd5 <- append(phd5, theta[5])
+    }
+    else {
+      phd1 <- append(phd1, 1 - theta[1])
+      phd2 <- append(phd2, 1 - theta[2])
+      phd3 <- append(phd3, 1 - theta[3])
+      phd4 <- append(phd4, 1 - theta[4])
+      phd5 <- append(phd5, 1 - theta[5])
+    }
+  }
+
+  hml <- c()
+  hmap <- c()
+
+  for (x in 2:(length(candyData) + 1)) {
+    phd1[x] <- phd1[x - 1] * phd1[x]
+    phd2[x] <- phd2[x - 1] * phd2[x]
+    phd3[x] <- phd3[x - 1] * phd3[x]
+    phd4[x] <- phd4[x - 1] * phd4[x]
+    phd5[x] <- phd5[x - 1] * phd5[x]
+
+    totx <- phd1[x] +
+      phd2[x] +
+      phd3[x] +
+      phd4[x] +
+      phd5[x]
+
+    phd1[x] <- phd1[x] / totx
+    phd2[x] <- phd2[x] / totx
+    phd3[x] <- phd3[x] / totx
+    phd4[x] <- phd4[x] / totx
+    phd5[x] <- phd5[x] / totx
+
+    hml <- append(hml, max(phd1[x - 1],
+                           phd2[x - 1],
+                           phd3[x - 1],
+                           phd4[x - 1],
+                           phd5[x - 1]))
+    hmap <- append(hmap, max(phd1[x - 1] * theta[1],
+                             phd2[x - 1] * theta[2],
+                             phd3[x - 1] * theta[3],
+                             phd4[x - 1] * theta[4],
+                             phd5[x - 1] * theta[5]))
+  }
+
+  plot(hmap, type = "l", col = "brown", xlab = "Number of observations in d", ylab = "Probability that next candy is lime", xaxs = "i", yaxs = "i", xlim = c(1, (n + 1)), ylim = c(0, 1), main = " MAP prediction P(DN+1=lime|hMAP) vs ML prediction  P(DN+1=lime|hML)")
+
+  legend("bottomright", legend = c("P(DN+1=lime|hMAP)", "P(DN+1=lime|hML)"),
+         col = c("brown", "purple"), lty = 1, cex = 0.5)
+
+  lines(hml, type = "l", col = "purple")
+}
+```
+
+#### $h3:$ $50$% cherry + $50$% lime $(\mu = 0.5)$
+
+```{r}
+main_func(rbinom(200, 1, 0.5))
+```
+
+#### $h4:$ $25$% cherry + $75$% lime $(\mu = 0.75)$
+
+```{r}
+main_func(rbinom(200, 1, 0.75))
+```

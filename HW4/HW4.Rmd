@@ -11,36 +11,46 @@ html_document: default
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-data <- c(79.3, 75.1,78.2, 74.1, 73.9, 75.0, 77.6,
-          77.3, 73.8, 74.6, 75.5, 74.0, 74.7, 75.9,
-          72.9, 73.8, 74.2, 78.1, 75.4, 76.3, 75.3,
-          76.2, 74.9, 78.0, 75.1, 76.8)
-summary(data)
-var(data)
-sd(data)
-```
+
+
+
 
 
 ```{r}
+library(qualityTools)
 Xbar <- vector()
-for (i in 1:100){
-  randX <- rexp(50, 2)
+n <- 50
+mu <- 0.5
+stSD <- 0.5/sqrt(n)
+rate <- 2
+
+for (i in 1:100) {
+  randX <- rexp(n, rate)
   Xbar <- append(Xbar, mean(randX))
 }
 
-# Theoretical mean is 0.5
-mean(Xbar)
-# Theoretical variance is 0.25
-var(Xbar) * 50
+# Theoretical mean and sd is 0.5
+# Theoritical variance os 0.25
+
+obsMean <- mean(Xbar)
+obsVar <- var(Xbar)*n
+ratioMu <- obsMean/mu
+ratioVar <- obsVar/0.25
+
+print("The ratio of observed mean of Xbar to theoritical mean is : ")
+print(ratioMu)
+print("The ratio of observed variance of Xbar to theoritical variance is : ")
+print(ratioVar)
 
 
 
 standardizedXbar <- vector()
-for (i in 1:100){
-  stX <- (Xbar[i] - 0.5)/10
+for (i in 1:100) {
+  stX <- (Xbar[i] - mu) / stSD
   standardizedXbar <- append(standardizedXbar, stX)
 }
-hist(standardizedXbar, breaks = 15 )
+hist(standardizedXbar, breaks = 25)
+qqPlot(standardizedXbar)
+
 
 ```
