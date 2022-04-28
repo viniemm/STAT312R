@@ -1,0 +1,24 @@
+---
+title: "STAT 312R - Final Exam"
+author: Vinayak Mathur
+date: 28st April 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(qualityTools)
+```
+
+
+
+
+
+```{r}
+
+
+```

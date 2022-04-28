@@ -1,0 +1,93 @@
+---
+title: "STAT 312R - Final Cheat Sheet"
+author: Vinayak Mathur
+date: 27st April 2022
+output:
+pdf_document: default
+html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(qualityTools)
+```
+
+
+
+
+Chapter 5 (two variables)
+```{r}
+x <- c(1, 1.5, 1.5, 2.5, 3)
+y <- c(1, 2, 3, 4, 5)
+fxy <- c(1 / 4, 1 / 8, 1 / 4, 1 / 4, 1 / 8)
+
+# condition for joint pmf
+sum(fxy)
+
+# E(X)
+mu_x <- sum(x * fxy)
+# E(Y)
+mu_y <- sum(y * fxy)
+# V(X)
+v_X <- sum(x^2 * fxy) - mu_x^2
+# V(Y)
+v_Y <- sum(y^2 * fxy) - mu_y^2
+mu_x
+
+
+
+# q is the value for left tail, mean is mean and sd is standard deviation NOT normalized
+pnorm(q = 1, mean = 1.5, sd = sqrt(0.078))
+4000 - qnorm(p = 0.0001, mean = 4000, sd = 150)
+
+pnorm(q = 63, mean = 72, sd = 3)
+
+```
+
+
+
+Chapter 7
+
+```{r}
+
+```
+
+
+
+
+Chapter 8
+
+```{r}
+
+# confidence interval calculation
+n <- length()
+percent <- 0.99
+a <- (1 - percent) / 2
+t <- qt(p = a, df = n - 1)
+margin <- t * s / sqrt(n)
+
+ppois(5, 4, lower.tail = FALSE)
+```
+
+
+
+
+Chapter 9
+
+```{r}
+
+
+
+```
+
+
+
+
+
+Chapter 11
+
+```{r}
+
+```
